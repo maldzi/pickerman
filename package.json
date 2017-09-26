@@ -1,0 +1,19 @@
+{
+  "name": "gatherthemall",
+  "version": "1.0.0",
+  "description": "a simple game",
+  "main": "game.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maldzi/pickerman.git"
+  },
+  "author": "Dzida M",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maldzi/pickerman/issues"
+  },
+  "homepage": "https://github.com/maldzi/pickerman#readme"
+}
