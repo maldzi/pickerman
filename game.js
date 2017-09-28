@@ -22,7 +22,7 @@ let Game = {
 		document.body.appendChild(Game.canvas);
 		Game.layout();
 
-		//let board = new Board();
+		Game.board = new Board();
 		Game.hero = new Player();
 
 		Game.animationLoop();
@@ -51,15 +51,15 @@ let Game = {
 
 		if (time-GameInfo.lastUpdate >= 1000/GameInfo.fps){
 			GameInfo.lastUpdate = time;	
-			Game.hero.draw();
-			Game.context.clearRect(0, 0, Game.width, Game.height);
+			Game.context.clearRect(0, 0, Game.canvas.width, Game.canvas.height);
+			Game.hero.draw();		
 			//czyszczenie canvas tylko tam gdzie to jest potrzebne
 			//w około playera, miejsce gdzie jest player
 			// miejsca gdzie będa pieniażki? Będzie się animowało jak bedzie sam player czyszczony? Chyba nie
 			//http://atomicrobotdesign.com/blog/web-development/html5-canvas-you-dont-always-have-to-clear-the-entire-thing/
 			
-			//rysowanie boahtera i całej planszy
-			//board.draw();
+			
+			Game.board.draw();
 			
 		} 
 
