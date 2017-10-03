@@ -20,11 +20,12 @@ let Game = {
 		Game.canvas = document.createElement('canvas');
 		Game.context = Game.canvas.getContext('2d');
 		document.body.appendChild(Game.canvas);
-		Game.layout();
+		
 
 		Game.board = new Board();
 		Game.hero = new Player();
 
+		Game.layout();
 		Game.animationLoop();
 	},
 
@@ -32,8 +33,8 @@ let Game = {
 		let height = window.innerHeight;
 		let width = window.innerWidth;
 
-		// let canvas.height = Game.board.length*fH*GameInfo.scale;
-		// let canvas.width = Game.board[0].length*fW*GameInfo.scale;
+		Game.canvas.height = Game.board.arena.length*GameInfo.fH*GameInfo.scale;
+		Game.canvas.width = Game.board.arena[0].length*GameInfo.fW*GameInfo.scale;
 	
 		//smoothing disabled
 		Game.context.mozImageSmoothingEnabled = false;
@@ -52,14 +53,15 @@ let Game = {
 		if (time-GameInfo.lastUpdate >= 1000/GameInfo.fps){
 			GameInfo.lastUpdate = time;	
 			Game.context.clearRect(0, 0, Game.canvas.width, Game.canvas.height);
-			Game.hero.draw();		
+					
 			//czyszczenie canvas tylko tam gdzie to jest potrzebne
 			//w około playera, miejsce gdzie jest player
 			// miejsca gdzie będa pieniażki? Będzie się animowało jak bedzie sam player czyszczony? Chyba nie
 			//http://atomicrobotdesign.com/blog/web-development/html5-canvas-you-dont-always-have-to-clear-the-entire-thing/
 			
-			
 			Game.board.draw();
+			
+			Game.hero.draw();
 			
 		} 
 

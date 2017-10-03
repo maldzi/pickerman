@@ -3,12 +3,26 @@ class Board {
 		this.fW = 16,
 		this.fH = 16,
 
-		this.createBoard(Board.arenas[0]),
-		console.log(this.arena)
+		//losowanie jednej tablicy z wielu dostępnych
+		this.createBoard(Board.arenas[0]);
 	}
 
 	draw(){
-	
+		for (let i = 0; i < this.arena.length; i++){
+			for (let j = 0; j < this.arena[i].length; j++){
+				Game.context.drawImage(
+					Game.sprite,
+					this.arena[i][j].x,
+					this.arena[i][j].y,
+					this.fW,
+					this.fH,
+					j*this.fW*GameInfo.scale,
+					i*this.fH*GameInfo.scale,
+					this.fW*GameInfo.scale,
+					this.fH*GameInfo.scale
+				);
+			}
+		}
 	}
 
 	createBoard(array){

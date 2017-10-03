@@ -2,7 +2,7 @@ class Player {
 	constructor(){
 		this.fW = 16,
 		this.fH = 19,
-		this.state = 'upGo',
+		this.state = 'down',
 		this.states = {
 			'down': {x: 65, y: 0, f:[0]},
 			'up': {x: 65, y: 20, f:[0]},
@@ -18,7 +18,10 @@ class Player {
 		this.x,
 		this.y,
 		this.delay = 2,
-		this.now = 0
+		this.now = 0,
+
+		this.changeX = 17,
+		this.changeY = 12
 	}
 
 	draw(){
@@ -28,8 +31,8 @@ class Player {
 			this.states[this.state].y,
 			this.fW,
 			this.fH,
-			0,
-			0,
+			this.changeX*GameInfo.scale,
+			this.changeY*GameInfo.scale,
 			this.fW*GameInfo.scale,
 			this.fH*GameInfo.scale
 		);
