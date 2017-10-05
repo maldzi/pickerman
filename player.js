@@ -2,7 +2,7 @@ class Player {
 	constructor(){
 		this.fW = 16,
 		this.fH = 19,
-		this.state = 'down',
+		this.state = 'downGo',
 		this.states = {
 			'down': {x: 65, y: 0, f:[0]},
 			'up': {x: 65, y: 20, f:[0]},

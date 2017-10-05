@@ -7,7 +7,16 @@ GameInfo = {
 	fW: 16,
 	fH: 16,
 	lastUpdate: 0,
-	scale: 4
+	scale: 4,
+	shuffleArray(array) {
+	    for (var i = array.length - 1; i > 0; i--) {
+	        var j = Math.floor(Math.random() * (i + 1));
+	        var temp = array[i];
+	        array[i] = array[j];
+	        array[j] = temp;
+	    }
+   		return array;
+	}
 };
 
 
@@ -49,7 +58,7 @@ let Game = {
 
 	animationLoop(time = 0){ 
 		requestAnimationFrame(Game.animationLoop);
-
+		
 		if (time-GameInfo.lastUpdate >= 1000/GameInfo.fps){
 			GameInfo.lastUpdate = time;	
 			Game.context.clearRect(0, 0, Game.canvas.width, Game.canvas.height);
@@ -59,8 +68,8 @@ let Game = {
 			// miejsca gdzie będa pieniażki? Będzie się animowało jak bedzie sam player czyszczony? Chyba nie
 			//http://atomicrobotdesign.com/blog/web-development/html5-canvas-you-dont-always-have-to-clear-the-entire-thing/
 			
-			Game.board.draw();
 			
+			Game.board.draw();
 			Game.hero.draw();
 			
 		} 
