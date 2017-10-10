@@ -11,7 +11,6 @@ class Board {
 		for (let i = 0; i < 25; i++){
 			this.addCoins(this.emptyPlaces);
 		}
-		console.log(this.arena);
 	}
 		
 

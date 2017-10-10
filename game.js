@@ -30,9 +30,11 @@ let Game = {
 		Game.context = Game.canvas.getContext('2d');
 		document.body.appendChild(Game.canvas);
 		
-
 		Game.board = new Board();
 		Game.hero = new Player();
+
+		window.addEventListener('keydown', Game.userAction);
+		window.addEventListener('keyup', Game.userAction);
 
 		Game.layout();
 		Game.animationLoop();
@@ -52,13 +54,38 @@ let Game = {
  		Game.context.imageSmoothingEnabled = false;
 	},
 
-	controlPlayer(){
-		//func for eventlisteners
+	userAction(ev){
+		
+		if (ev.keyCode === 37 || ev.keyCode === 38 || ev.keyCode === 39 ||ev.keyCode === 40){
+			ev.preventDefault();
+
+			if (ev.type === 'keydown'){
+				Game['key' + ev.keyCode] = true;
+				Game.hero.move();	
+			} else if (ev.type === 'keyup'){
+				Game['key' + ev.keyCode] = false;
+				Game.hero.move();	
+			}
+		}
+		
 	},
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	animationLoop(time = 0){ 
 		requestAnimationFrame(Game.animationLoop);
-		
+
 		if (time-GameInfo.lastUpdate >= 1000/GameInfo.fps){
 			GameInfo.lastUpdate = time;	
 			Game.context.clearRect(0, 0, Game.canvas.width, Game.canvas.height);

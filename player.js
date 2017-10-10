@@ -2,7 +2,7 @@ class Player {
 	constructor(){
 		this.fW = 16,
 		this.fH = 19,
-		this.state = 'downGo',
+		this.state = 'down',
 		this.states = {
 			'down': {x: 65, y: 0, f:[0]},
 			'up': {x: 65, y: 20, f:[0]},
@@ -15,24 +15,38 @@ class Player {
 			'die': {x: 0, y: 59, f:[0,1,0,1,2,3,4,5,6]}
 		},
 		this.currFrame = 0,
-		this.x,
-		this.y,
+		//start player position
+		this.x = Game.board.fW,
+		this.y = Game.board.fH,
+		this.changeX = 1,
+		this.changeY = -3,
+		//delay for player
 		this.delay = 2,
 		this.now = 0,
-
-		this.changeX = 17,
-		this.changeY = 12
+		//
+		this.speed = 2
 	}
 
 	draw(){
+		//move player 
+		if (this.state === 'downGo'){
+			this.y += this.speed;
+		} else if (this.state === 'upGo'){
+			this.y -= this.speed;
+		} else if (this.state === 'rightGo'){
+			this.x += this.speed;
+		} else if (this.state === 'leftGo'){
+			this.x -= this.speed;
+		}
+
 		Game.context.drawImage(
 			Game.sprite,
 			this.states[this.state].x+(this.fW*this.states[this.state].f[this.currFrame]),
 			this.states[this.state].y,
 			this.fW,
 			this.fH,
-			this.changeX*GameInfo.scale,
-			this.changeY*GameInfo.scale,
+			(this.x + this.changeX)*GameInfo.scale,
+			(this.y + this.changeY)*GameInfo.scale,
 			this.fW*GameInfo.scale,
 			this.fH*GameInfo.scale
 		);
@@ -43,6 +57,29 @@ class Player {
 			this.currFrame = this.currFrame >= this.states[this.state].f.length-1 ? 0 : this.currFrame+1;
 			this.now = 0;
 		}
+	}
+
+	move(){
+		this._state = this.state;
+
+		if (Game.key37){
+			this._state = 'leftGo';
+		} else if (Game.key38){
+			this._state = 'upGo';
+		} else if (Game.key39){
+			this._state = 'rightGo';
+		} else if (Game.key40){
+			this._state = 'downGo';
+		} else {
+			this._state = this._state.slice(0, -2);
+		}
+
+		//to begin with first frame
+		if (this._state !== this.state) {
+			this.currFrame = 0;
+			this.state = this._state;
+		}
+
 	}
 
 }
