@@ -25,20 +25,42 @@ class Player {
 		this.now = 0,
 		//
 		this.speed = 2
+
+	}
+
+	findPosition(){
+		this.row = Math.round(this.y/Game.board.fH),
+		this.column = Math.round(this.x/Game.board.fW)
+
+		if (this.state.slice(-2) === 'Go'){
+			if(this.state === 'downGo' || this.state === 'upGo'){
+				this.nextColumn = this.column;
+				this.nextRow = this.state === 'downGo' ? Math.ceil(this.y/Game.board.fH) : Math.floor(this.y/Game.board.fH);
+			} else {
+				this.nextRow = this.row;
+				this.nextColumn = this.state === 'rightGo' ? Math.ceil(this.x/Game.board.fW) : Math.floor(this.x/Game.board.fW);
+			}
+		} else {
+			this.nextRow = this.row;
+			this.nextColumn = this.column;
+		}
 	}
 
 	draw(){
+		
 		//move player 
-		if (this.state === 'downGo'){
-			this.y += this.speed;
-		} else if (this.state === 'upGo'){
-			this.y -= this.speed;
-		} else if (this.state === 'rightGo'){
-			this.x += this.speed;
-		} else if (this.state === 'leftGo'){
-			this.x -= this.speed;
+		if (this.state.slice(-2) === 'Go'){
+			if (this.state === 'downGo'){
+				this.y += this.speed;
+			} else if (this.state === 'upGo'){
+				this.y -= this.speed;
+			} else if (this.state === 'rightGo'){
+				this.x += this.speed;
+			} else if (this.state === 'leftGo'){
+				this.x -= this.speed;
+			} this.checkIfEmpty();
 		}
-
+			 
 		Game.context.drawImage(
 			Game.sprite,
 			this.states[this.state].x+(this.fW*this.states[this.state].f[this.currFrame]),
@@ -56,7 +78,7 @@ class Player {
 		} else {
 			this.currFrame = this.currFrame >= this.states[this.state].f.length-1 ? 0 : this.currFrame+1;
 			this.now = 0;
-		}
+		}		
 	}
 
 	move(){
@@ -71,7 +93,7 @@ class Player {
 		} else if (Game.key40){
 			this._state = 'downGo';
 		} else {
-			this._state = this._state.slice(0, -2);
+			this._state = this.state.slice(0, -2);
 		}
 
 		//to begin with first frame
@@ -79,7 +101,18 @@ class Player {
 			this.currFrame = 0;
 			this.state = this._state;
 		}
+		
+	}
 
+	checkIfEmpty(){
+		this.findPosition();
+		if (!(Game.board.arena[this.nextRow][this.nextColumn].x === Board.elements.floor.x && Game.board.arena[this.nextRow][this.nextColumn].y === Board.elements.floor.y)){
+			
+			this._state = this.state.slice(0, -2);
+			this.currFrame = 0;
+ 			this.y = this.row*Game.board.fH;
+ 			this.x = this.column*Game.board.fW;
+		}
 	}
 
 }
