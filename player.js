@@ -25,7 +25,6 @@ class Player {
 		this.now = 0,
 		//
 		this.speed = 2
-
 	}
 
 	findPosition(){
@@ -33,13 +32,14 @@ class Player {
 		this.column = Math.round(this.x/Game.board.fW)
 
 		if (this.state.slice(-2) === 'Go'){
-			if(this.state === 'downGo' || this.state === 'upGo'){
-				this.nextColumn = this.column;
-				this.nextRow = this.state === 'downGo' ? Math.ceil(this.y/Game.board.fH) : Math.floor(this.y/Game.board.fH);
-			} else {
+			if (this.state === 'leftGo' || this.state === 'rightGo'){
 				this.nextRow = this.row;
-				this.nextColumn = this.state === 'rightGo' ? Math.ceil(this.x/Game.board.fW) : Math.floor(this.x/Game.board.fW);
+				this.nextColumn = this.state === 'leftGo' ? Math.floor(this.x/Game.board.fW) : Math.ceil(this.x/Game.board.fW);
+			} else {
+				this.nextColumn = this.column;
+				this.nextRow = this.state === 'upGo' ? Math.floor(this.y/Game.board.fH) : Math.ceil(this.y/Game.board.fW);
 			}
+			this.checkIfEmpty();
 		} else {
 			this.nextRow = this.row;
 			this.nextColumn = this.column;
@@ -47,7 +47,6 @@ class Player {
 	}
 
 	draw(){
-		
 		//move player 
 		if (this.state.slice(-2) === 'Go'){
 			if (this.state === 'downGo'){
@@ -58,7 +57,7 @@ class Player {
 				this.x += this.speed;
 			} else if (this.state === 'leftGo'){
 				this.x -= this.speed;
-			} this.checkIfEmpty();
+			} this.findPosition();
 		}
 			 
 		Game.context.drawImage(
@@ -101,17 +100,20 @@ class Player {
 			this.currFrame = 0;
 			this.state = this._state;
 		}
-		
 	}
 
 	checkIfEmpty(){
-		this.findPosition();
-		if (!(Game.board.arena[this.nextRow][this.nextColumn].x === Board.elements.floor.x && Game.board.arena[this.nextRow][this.nextColumn].y === Board.elements.floor.y)){
-			
+		if (Game.board.arena[this.nextRow][this.nextColumn].x !== Board.elements.floor.x){
 			this._state = this.state.slice(0, -2);
 			this.currFrame = 0;
  			this.y = this.row*Game.board.fH;
  			this.x = this.column*Game.board.fW;
+		} else {
+			if (this.row !== this.nextRow){
+				this.x = this.column*Game.board.fW;
+			} else if (this.column !== this.nextColumn){
+				this.y = this.row*Game.board.fH;
+			}
 		}
 	}
 

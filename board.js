@@ -11,13 +11,12 @@ class Board {
 		for (let i = 0; i < 25; i++){
 			this.addCoins(this.emptyPlaces);
 		}
+		console.log(this.coinPlaces);
 	}
-		
 
 	draw(){
 		for (let i = 0; i < this.arena.length; i++){
 			for (let j = 0; j < this.arena[i].length; j++){
-
 				Game.context.drawImage(
 					Game.sprite,
 					this.arena[i][j].x,
@@ -32,6 +31,7 @@ class Board {
 			}
 		}
 		this.drawCoins();
+		this.collectCoins();
 	}
 
 	createBoard(array){
@@ -75,7 +75,6 @@ class Board {
 				this.fW*GameInfo.scale,
 				this.fH*GameInfo.scale
 			);
-
 		}	
 
 		if (this.delay - this.now > 0){
@@ -83,6 +82,13 @@ class Board {
 		} else {
 			this.currFrame = this.currFrame >= Board.elements.C.f.length-1 ? 0 : this.currFrame+1;
 			this.now = 0;
+		}
+	}
+
+	collectCoins(){
+		if (this.coinPlaces.length > 0){
+
+			//console.log(Math.round(Game.hero.x/this.fW), Math.round(Game.hero.y/this.fH));
 		}
 	}
 

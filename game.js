@@ -71,19 +71,6 @@ let Game = {
 		
 	},
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 	animationLoop(time = 0){ 
 		requestAnimationFrame(Game.animationLoop);
 
