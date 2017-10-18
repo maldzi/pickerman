@@ -31,7 +31,7 @@ class Board {
 			}
 		}
 		this.drawCoins();
-		this.collectCoins();
+		
 	}
 
 	createBoard(array){
@@ -82,13 +82,6 @@ class Board {
 		} else {
 			this.currFrame = this.currFrame >= Board.elements.C.f.length-1 ? 0 : this.currFrame+1;
 			this.now = 0;
-		}
-	}
-
-	collectCoins(){
-		if (this.coinPlaces.length > 0){
-
-			//console.log(Math.round(Game.hero.x/this.fW), Math.round(Game.hero.y/this.fH));
 		}
 	}
 

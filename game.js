@@ -42,11 +42,8 @@ let Game = {
 	},
 
 	layout(){
-		let height = window.innerHeight;
-		let width = window.innerWidth;
-
-		Game.canvas.height = Game.board.arena.length*GameInfo.fH*GameInfo.scale;
-		Game.canvas.width = Game.board.arena[0].length*GameInfo.fW*GameInfo.scale;
+		Game.canvas.height = Game.board.arena.length*Game.board.fW*GameInfo.scale;
+		Game.canvas.width = Game.board.arena[0].length*Game.board.fW*GameInfo.scale;
 	
 		//smoothing disabled
 		Game.context.mozImageSmoothingEnabled = false;

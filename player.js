@@ -57,7 +57,9 @@ class Player {
 				this.x += this.speed;
 			} else if (this.state === 'leftGo'){
 				this.x -= this.speed;
-			} this.findPosition();
+			} 
+			this.findPosition();
+			this.collectCoins();
 		}
 			 
 		Game.context.drawImage(
@@ -104,16 +106,33 @@ class Player {
 
 	checkIfEmpty(){
 		if (Game.board.arena[this.nextRow][this.nextColumn].x !== Board.elements.floor.x){
+			//stay if there's a block
 			this._state = this.state.slice(0, -2);
 			this.currFrame = 0;
  			this.y = this.row*Game.board.fH;
  			this.x = this.column*Game.board.fW;
 		} else {
+			//center player
 			if (this.row !== this.nextRow){
 				this.x = this.column*Game.board.fW;
 			} else if (this.column !== this.nextColumn){
 				this.y = this.row*Game.board.fH;
 			}
+		}
+	}
+
+	collectCoins(){
+		if (Game.board.coinPlaces.length > 1){
+			//console.log(Game.board.coinPlaces);
+			//console.log(this.column, this.row);
+			//console.log(Game.board.coinPlaces[this.column].x, Game.board.coinPlaces[this.row].y);
+			for (let i = Game.board.coinPlaces.length-1; i >= 0; i--){
+				if (Game.board.coinPlaces[i].x === this.column && Game.board.coinPlaces[i].y === this.row){
+					Game.board.coinPlaces.splice(i, 1);		
+				}
+			} 
+		} else {
+			console.log('game over');
 		}
 	}
 
