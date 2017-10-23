@@ -11,7 +11,7 @@ class Board {
 		for (let i = 0; i < 25; i++){
 			this.addCoins(this.emptyPlaces);
 		}
-		console.log(this.coinPlaces);
+		console.log(this.emptyPlaces);
 	}
 
 	draw(){
@@ -38,6 +38,7 @@ class Board {
 		this.arena = [];
 		this.emptyPlaces = [];
 		this.coinPlaces = [];
+		this.coinsMap = new Map();
 
 		for (let i = 0; i < array.length; i++){
 			this.arena.push([]);
@@ -92,8 +93,6 @@ Board.elements = {
 	'X': {x: 16, y:23},
 	'Y': {x: 0, y:23},
 	'C': {x: 0, y: 39, f:[0,1,2,3]}
-	//'enemyUp': {x:0, y:0, f:[0,1]},
-	//'enemyDown': {x:32, y:0, f:[0,1]}
 };
 
 Board.arenas = [

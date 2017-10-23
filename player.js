@@ -123,12 +123,9 @@ class Player {
 
 	collectCoins(){
 		if (Game.board.coinPlaces.length > 1){
-			//console.log(Game.board.coinPlaces);
-			//console.log(this.column, this.row);
-			//console.log(Game.board.coinPlaces[this.column].x, Game.board.coinPlaces[this.row].y);
 			for (let i = Game.board.coinPlaces.length-1; i >= 0; i--){
 				if (Game.board.coinPlaces[i].x === this.column && Game.board.coinPlaces[i].y === this.row){
-					Game.board.coinPlaces.splice(i, 1);		
+					Game.board.coinPlaces.splice(i, 1);	
 				}
 			} 
 		} else {
