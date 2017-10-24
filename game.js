@@ -33,18 +33,24 @@ let Game = {
 		Game.board = new Board();
 		Game.hero = new Player();
 		Game.enemy = new Enemy();
+		//Game.enemy2 = new Enemy();
 
 
 		window.addEventListener('keydown', Game.userAction);
 		window.addEventListener('keyup', Game.userAction);
 
-		window.setInterval(function(){
+		Game.id = window.setInterval(function(){
 					Game.enemy.findEmptyPosition();
-					console.log(Game.enemy.position);
 				}, 5000);
-		
+
+		// Game.id2 = window.setInterval(function(){
+		// 			Game.enemy2.findEmptyPosition();
+		// 		}, 3000);
+
 		Game.layout();
 		Game.animationLoop();
+		Game.id();
+		Game.id2();
 	},
 
 	layout(){
@@ -87,6 +93,7 @@ let Game = {
 			Game.board.draw();
 			Game.hero.draw();
 			Game.enemy.draw();
+			//Game.enemy2.draw();
 
 		} 
 

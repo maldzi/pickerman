@@ -83,25 +83,28 @@ class Player {
 	}
 
 	move(){
-		this._state = this.state;
+		if(!Game.enemy.result){
+			this._state = this.state;
 
-		if (Game.key37){
-			this._state = 'leftGo';
-		} else if (Game.key38){
-			this._state = 'upGo';
-		} else if (Game.key39){
-			this._state = 'rightGo';
-		} else if (Game.key40){
-			this._state = 'downGo';
-		} else {
-			this._state = this.state.slice(0, -2);
-		}
+			if (Game.key37){
+				this._state = 'leftGo';
+			} else if (Game.key38){
+				this._state = 'upGo';
+			} else if (Game.key39){
+				this._state = 'rightGo';
+			} else if (Game.key40){
+				this._state = 'downGo';
+			} else {
+				this._state = this.state.slice(0, -2);
+			}
 
-		//to begin with first frame
-		if (this._state !== this.state) {
-			this.currFrame = 0;
-			this.state = this._state;
+			//to begin with first frame
+			if (this._state !== this.state) {
+				this.currFrame = 0;
+				this.state = this._state;
+			}
 		}
+			
 	}
 
 	checkIfEmpty(){
