@@ -1,6 +1,5 @@
 class Player {
 	constructor(){
-		this.fW = 16,
 		this.fH = 19,
 		this.state = 'down',
 		this.states = {
@@ -16,10 +15,8 @@ class Player {
 		},
 		this.currFrame = 0,
 		//start player position
-		this.x = Game.board.fW,
-		this.y = Game.board.fH,
-		this.changeX = 1,
-		this.changeY = -3,
+		this.x = GameInfo.fW,
+		this.y = GameInfo.fH,
 		//delay for player
 		this.delay = 2,
 		this.now = 0,
@@ -27,27 +24,7 @@ class Player {
 		this.speed = 2
 	}
 
-	findPosition(){
-		this.row = Math.round(this.y/Game.board.fH),
-		this.column = Math.round(this.x/Game.board.fW)
-
-		if (this.state.slice(-2) === 'Go'){
-			if (this.state === 'leftGo' || this.state === 'rightGo'){
-				this.nextRow = this.row;
-				this.nextColumn = this.state === 'leftGo' ? Math.floor(this.x/Game.board.fW) : Math.ceil(this.x/Game.board.fW);
-			} else {
-				this.nextColumn = this.column;
-				this.nextRow = this.state === 'upGo' ? Math.floor(this.y/Game.board.fH) : Math.ceil(this.y/Game.board.fW);
-			}
-			this.checkIfEmpty();
-		} else {
-			this.nextRow = this.row;
-			this.nextColumn = this.column;
-		}
-	}
-
-	draw(){
-		//move player 
+	draw(){ 
 		if (this.state.slice(-2) === 'Go'){
 			if (this.state === 'downGo'){
 				this.y += this.speed;
@@ -64,13 +41,13 @@ class Player {
 			 
 		Game.context.drawImage(
 			Game.sprite,
-			this.states[this.state].x+(this.fW*this.states[this.state].f[this.currFrame]),
+			this.states[this.state].x+(GameInfo.fW*this.states[this.state].f[this.currFrame]),
 			this.states[this.state].y,
-			this.fW,
+			GameInfo.fW,
 			this.fH,
-			(this.x + this.changeX)*GameInfo.scale,
-			(this.y + this.changeY)*GameInfo.scale,
-			this.fW*GameInfo.scale,
+			(this.x + 1)*GameInfo.scale,
+			(this.y - 3)*GameInfo.scale,
+			GameInfo.fW*GameInfo.scale,
 			this.fH*GameInfo.scale
 		);
 
@@ -83,57 +60,80 @@ class Player {
 	}
 
 	move(){
-		if(!Game.enemy.result){
-			this._state = this.state;
+		if((!Game.enemy.result) && (!Game.enemy2.result) && (!Game.enemy3.result)){
+			this.state = this._state;
 
 			if (Game.key37){
-				this._state = 'leftGo';
+				this.state = 'leftGo';
 			} else if (Game.key38){
-				this._state = 'upGo';
+				this.state = 'upGo';
 			} else if (Game.key39){
-				this._state = 'rightGo';
+				this.state = 'rightGo';
 			} else if (Game.key40){
-				this._state = 'downGo';
+				this.state = 'downGo';
 			} else {
-				this._state = this.state.slice(0, -2);
+				this.state = this.state.slice(0, -2);
 			}
 
 			//to begin with first frame
-			if (this._state !== this.state) {
+			if (this.state !== this._state) {
 				this.currFrame = 0;
-				this.state = this._state;
+				this._state = this.state;
 			}
+		}	
+	}
+
+	findPosition(){
+		this.row = Math.round(this.y/GameInfo.fH),
+		this.column = Math.round(this.x/GameInfo.fW)
+
+		if (this.state.slice(-2) === 'Go'){
+			if (this.state === 'leftGo' || this.state === 'rightGo'){
+				this.nextRow = this.row;
+				this.nextColumn = this.state === 'leftGo' ? Math.floor(this.x/GameInfo.fW) : Math.ceil(this.x/GameInfo.fW);
+			} else {
+				this.nextColumn = this.column;
+				this.nextRow = this.state === 'upGo' ? Math.floor(this.y/GameInfo.fH) : Math.ceil(this.y/GameInfo.fW);
+			}
+			this.checkIfEmpty();
+		} else {
+			this.nextRow = this.row;
+			this.nextColumn = this.column;
 		}
-			
 	}
 
 	checkIfEmpty(){
 		if (Game.board.arena[this.nextRow][this.nextColumn].x !== Board.elements.floor.x){
 			//stay if there's a block
-			this._state = this.state.slice(0, -2);
+			this.state = this.state.slice(0, -2);
 			this.currFrame = 0;
- 			this.y = this.row*Game.board.fH;
- 			this.x = this.column*Game.board.fW;
+ 			this.y = this.row*GameInfo.fH;
+ 			this.x = this.column*GameInfo.fW;
 		} else {
 			//center player
 			if (this.row !== this.nextRow){
-				this.x = this.column*Game.board.fW;
+				this.x = this.column*GameInfo.fW;
 			} else if (this.column !== this.nextColumn){
-				this.y = this.row*Game.board.fH;
+				this.y = this.row*GameInfo.fH;
 			}
 		}
 	}
 
 	collectCoins(){
-		if (Game.board.coinPlaces.length > 1){
+		if (Game.board.coinPlaces.length > 0){
 			for (let i = Game.board.coinPlaces.length-1; i >= 0; i--){
 				if (Game.board.coinPlaces[i].x === this.column && Game.board.coinPlaces[i].y === this.row){
 					Game.board.coinPlaces.splice(i, 1);	
 				}
 			} 
 		} else {
-			console.log('game over');
+			window.clearInterval(Game.showFirst);
+			window.clearInterval(Game.showSecond);
+			window.clearInterval(Game.showThird);
+
 		}
 	}
+
+		
 
 }

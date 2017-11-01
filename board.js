@@ -1,17 +1,10 @@
 class Board {
 	constructor(){
-		this.fW = 16,
-		this.fH = 16,
 		this.currFrame = 0,
 		this.delay = 3,
 		this.now = 0,
-	
 		this.createBoard(Board.arenas[Math.floor(Math.random()*Board.arenas.length)]);
-
-		for (let i = 0; i < 25; i++){
-			this.addCoins(this.emptyPlaces);
-		}
-		console.log(this.emptyPlaces);
+		console.log(this.coinPlaces);
 	}
 
 	draw(){
@@ -21,24 +14,22 @@ class Board {
 					Game.sprite,
 					this.arena[i][j].x,
 					this.arena[i][j].y,
-					this.fW,
-					this.fH,
-					j*this.fW*GameInfo.scale,
-					i*this.fH*GameInfo.scale,
-					this.fW*GameInfo.scale,
-					this.fH*GameInfo.scale
+					GameInfo.fW,
+					GameInfo.fH,
+					j*GameInfo.fW*GameInfo.scale,
+					i*GameInfo.fH*GameInfo.scale,
+					GameInfo.fW*GameInfo.scale,
+					GameInfo.fH*GameInfo.scale
 				);
 			}
 		}
 		this.drawCoins();
-		
 	}
 
 	createBoard(array){
 		this.arena = [];
 		this.emptyPlaces = [];
 		this.coinPlaces = [];
-		this.coinsMap = new Map();
 
 		for (let i = 0; i < array.length; i++){
 			this.arena.push([]);
@@ -50,13 +41,17 @@ class Board {
 				if (array[i].charAt(j) === ' ' && !(i === 1 && j === 1)) {
 					this.emptyPlaces.push({x: j, y: i});
 				}
-
 			}
 		}
 		this.emptyPlaces = GameInfo.shuffleArray(this.emptyPlaces);
+
+		for (let i = 0; i < 25; i++){
+			this.addCoins(this.emptyPlaces);
+		}
 	}
 
 	addCoins(array){
+		
 		if (array.length){
 			this.coin = array.shift();
 			this.coinPlaces.push(this.coin);
@@ -64,17 +59,17 @@ class Board {
 	}
 
 	drawCoins(){
-		for (let i = 0; i < this.coinPlaces.length-1; i++){
+		for (let i = 0; i < this.coinPlaces.length; i++){
 			Game.context.drawImage(
 				Game.sprite,
-				Board.elements.C.x + (this.fW*Board.elements.C.f[this.currFrame]),
+				Board.elements.C.x + (GameInfo.fW*Board.elements.C.f[this.currFrame]),
 				Board.elements.C.y,
-				this.fW,
-				this.fH,
-				this.coinPlaces[i].x*this.fW*GameInfo.scale,
-				this.coinPlaces[i].y*this.fW*GameInfo.scale,
-				this.fW*GameInfo.scale,
-				this.fH*GameInfo.scale
+				GameInfo.fW,
+				GameInfo.fH,
+				this.coinPlaces[i].x*GameInfo.fW*GameInfo.scale,
+				this.coinPlaces[i].y*GameInfo.fW*GameInfo.scale,
+				GameInfo.fW*GameInfo.scale,
+				GameInfo.fH*GameInfo.scale
 			);
 		}	
 
@@ -85,14 +80,13 @@ class Board {
 			this.now = 0;
 		}
 	}
-
 }
 
 Board.elements = {
 	'floor': {x: 32, y: 23},
-	'X': {x: 16, y:23},
-	'Y': {x: 0, y:23},
-	'C': {x: 0, y: 39, f:[0,1,2,3]}
+	'X': {x: 16, y: 23},
+	'Y': {x: 0, y: 23},
+	'C': {x: 0, y: 39, f: [0, 1, 2, 3]}
 };
 
 Board.arenas = [
