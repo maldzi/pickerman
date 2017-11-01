@@ -128,9 +128,8 @@ class Player {
 			} 
 		} else {
 			window.clearInterval(Game.showFirst);
-			window.clearInterval(Game.showSecond);
-			window.clearInterval(Game.showThird);
-
+			window.clearInterval(Game.showSecFour);
+			window.clearInterval(Game.showThirdFifth);
 		}
 	}
 

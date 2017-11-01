@@ -37,7 +37,9 @@ let Game = {
 		Game.enemy = new Enemy();
 		Game.enemy2 = new Enemy();
 		Game.enemy3 = new Enemy();
-		Game.elementsToDraw.push(Game.board, Game.hero, Game.enemy, Game.enemy2, Game.enemy3);
+		Game.enemy4 = new Enemy();
+		Game.enemy5 = new Enemy();
+		Game.elementsToDraw.push(Game.board, Game.hero, Game.enemy, Game.enemy2, Game.enemy3, Game.enemy4, Game.enemy5);
 
 		window.addEventListener('keydown', Game.userAction);
 		window.addEventListener('keyup', Game.userAction);
@@ -46,19 +48,21 @@ let Game = {
 		Game.showFirst = window.setInterval(function(){
 					Game.enemy.findEmptyPosition();
 				}, 3000);
-		Game.showSecond = window.setInterval(function(){
+		Game.showSecFour = window.setInterval(function(){
 					Game.enemy2.findEmptyPosition();
+					Game.enemy4.findEmptyPosition();
 				}, 4000);
-		Game.showThird = window.setInterval(function(){
+		Game.showThirdFifth = window.setInterval(function(){
 					Game.enemy3.findEmptyPosition();
+					Game.enemy5.findEmptyPosition();
 				}, 5000);
 
 		Game.layout();
 		Game.animationLoop();	
 
 		Game.showFirst();
-		Game.showSecond();
-		Game.showThird();	
+		Game.showSecFour();
+		Game.showThirdFifth();	
 	},
 
 	layout(){

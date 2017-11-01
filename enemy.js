@@ -35,7 +35,7 @@ class Enemy {
 	}
 
 	enemyKillPlayer(){
-		if (Game.hero.column === this.position.x && Game.hero.row === this.position.y){
+		if ((Game.hero.column === this.position.x && Game.hero.row === this.position.y) || ((Game.hero.row === this.position.y-1) && Game.hero.column === this.position.x)){
 			Game.hero.state = 'die';
 			window.clearInterval(Game.id);
 			window.clearInterval(Game.id2);
