@@ -35,10 +35,11 @@ class Player {
 			} else if (this.state === 'leftGo'){
 				this.x -= this.speed;
 			} 
+
 			this.findPosition();
 			this.collectCoins();
-		}
-			 
+		} 
+
 		Game.context.drawImage(
 			Game.sprite,
 			this.states[this.state].x+(GameInfo.fW*this.states[this.state].f[this.currFrame]),
@@ -60,7 +61,7 @@ class Player {
 	}
 
 	move(){
-		if((!Game.enemy.result) && (!Game.enemy2.result) && (!Game.enemy3.result)){
+		if((!Game.enemy.result) && (!Game.enemy2.result) && (!Game.enemy3.result) && (!Game.enemy4.result) && (!Game.enemy5.result)){
 			this.state = this._state;
 
 			if (Game.key37){

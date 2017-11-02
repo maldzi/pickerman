@@ -2,20 +2,26 @@
 <html>
 <head>
 	<title>Pickerman</title>
-	<style type="text/css">
-		body {
-			background-color: #555;
-			overflow: hidden;
-			margin: 0;
-			padding: 0;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+	<div id="gameOverScreen">
+		<h1>Will you play again?</h1>
+		<input type="button" value="Yes, I will!" id="resumeButton" />
+	</div>
 
 	<script type="text/javascript" src="game.js"></script>
 	<script type="text/javascript" src="board.js"></script>
 	<script type="text/javascript" src="player.js"></script>
 	<script type="text/javascript" src="enemy.js"></script>
+
+	<script type="text/javascript">
+		
+		let button = document.getElementById('resumeButton');
+		button.addEventListener('click', function(){
+			window.location.reload();
+		});
+
+	</script>
 </body>
 <html>

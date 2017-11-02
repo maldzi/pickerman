@@ -1,5 +1,6 @@
 window.onload = function(){
 	Game.init();
+
 };
 
 GameInfo = {
@@ -40,7 +41,7 @@ let Game = {
 		Game.enemy4 = new Enemy();
 		Game.enemy5 = new Enemy();
 		Game.elementsToDraw.push(Game.board, Game.hero, Game.enemy, Game.enemy2, Game.enemy3, Game.enemy4, Game.enemy5);
-
+		
 		window.addEventListener('keydown', Game.userAction);
 		window.addEventListener('keyup', Game.userAction);
 
