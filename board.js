@@ -4,7 +4,6 @@ class Board {
 		this.delay = 3,
 		this.now = 0,
 		this.createBoard(Board.arenas[Math.floor(Math.random()*Board.arenas.length)]);
-		console.log(this.coinPlaces);
 	}
 
 	draw(){

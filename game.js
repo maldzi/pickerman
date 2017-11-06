@@ -59,22 +59,11 @@ let Game = {
 
 		Game.layout();
 		Game.animationLoop();	
-		//Game.gameOverScreen();
-
-		Game.showFirst();
-		Game.showSecFour();
-		Game.showThirdFifth();	
 	},
 
 	layout(){
 		Game.canvas.height = Game.board.arena.length*GameInfo.fH*GameInfo.scale;
 		Game.canvas.width = Game.board.arena[0].length*GameInfo.fW*GameInfo.scale;
-		
-		GameInfo.screenHeight = window.innerHeight;
-		GameInfo.screenWidth = window.innerWidth;
-
-
-
 
 		//smoothing disabled
 		Game.context.mozImageSmoothingEnabled = false;
@@ -103,9 +92,7 @@ let Game = {
 
 		if (time-GameInfo.lastUpdate >= 1000/GameInfo.fps){
 			GameInfo.lastUpdate = time;	
-			Game.context.clearRect(0, 0, Game.canvas.width, Game.canvas.height);
-					
-			//http://atomicrobotdesign.com/blog/web-development/html5-canvas-you-dont-always-have-to-clear-the-entire-thing/		
+
 			for (let i in Game.elementsToDraw){
 				Game.elementsToDraw[i].draw();
 			}
