@@ -1,6 +1,5 @@
 window.onload = function(){
 	Game.init();
-
 };
 
 GameInfo = {
@@ -27,8 +26,8 @@ let Game = {
 		Game.sprite = new Image();
 		Game.sprite.src = "sprite.png";
 
-		Game.canvas = document.createElement('canvas');
-		Game.context = Game.canvas.getContext('2d');
+		Game.canvas = document.createElement("canvas");
+		Game.context = Game.canvas.getContext("2d");
 		document.body.appendChild(Game.canvas);
 		
 		//create all objects and collect in an array
@@ -42,8 +41,8 @@ let Game = {
 		Game.enemy5 = new Enemy();
 		Game.elementsToDraw.push(Game.board, Game.hero, Game.enemy, Game.enemy2, Game.enemy3, Game.enemy4, Game.enemy5);
 		
-		window.addEventListener('keydown', Game.userAction);
-		window.addEventListener('keyup', Game.userAction);
+		window.addEventListener("keydown", Game.userAction);
+		window.addEventListener("keyup", Game.userAction);
 
 		//show the enemies on board at different time
 		Game.showFirst = window.setInterval(function(){
@@ -60,6 +59,7 @@ let Game = {
 
 		Game.layout();
 		Game.animationLoop();	
+		//Game.gameOverScreen();
 
 		Game.showFirst();
 		Game.showSecFour();
@@ -69,7 +69,13 @@ let Game = {
 	layout(){
 		Game.canvas.height = Game.board.arena.length*GameInfo.fH*GameInfo.scale;
 		Game.canvas.width = Game.board.arena[0].length*GameInfo.fW*GameInfo.scale;
-	
+		
+		GameInfo.screenHeight = window.innerHeight;
+		GameInfo.screenWidth = window.innerWidth;
+
+
+
+
 		//smoothing disabled
 		Game.context.mozImageSmoothingEnabled = false;
  		Game.context.webkitImageSmoothingEnabled = false;
@@ -82,11 +88,11 @@ let Game = {
 		if (ev.keyCode === 37 || ev.keyCode === 38 || ev.keyCode === 39 || ev.keyCode === 40){
 			ev.preventDefault();
 
-			if (ev.type === 'keydown'){
-				Game['key' + ev.keyCode] = true;
+			if (ev.type === "keydown"){
+				Game["key" + ev.keyCode] = true;
 				Game.hero.move();	
-			} else if (ev.type === 'keyup'){
-				Game['key' + ev.keyCode] = false;
+			} else if (ev.type === "keyup"){
+				Game["key" + ev.keyCode] = false;
 				Game.hero.move();	
 			}
 		}
@@ -99,14 +105,22 @@ let Game = {
 			GameInfo.lastUpdate = time;	
 			Game.context.clearRect(0, 0, Game.canvas.width, Game.canvas.height);
 					
-			//czyszczenie canvas tylko tam gdzie to jest potrzebne
-			//w około playera, miejsce gdzie jest player
-			// miejsca gdzie będa pieniażki? Będzie się animowało jak bedzie sam player czyszczony? Chyba nie
 			//http://atomicrobotdesign.com/blog/web-development/html5-canvas-you-dont-always-have-to-clear-the-entire-thing/		
 			for (let i in Game.elementsToDraw){
 				Game.elementsToDraw[i].draw();
 			}
 		} 
 	},
+
+	gameOverScreen(){
+		Game.canvas.setAttribute("id", "canvas");
+
+		let button = document.getElementById("resumeButton");
+		button.addEventListener("click", function(){
+			window.location.reload();
+		});
+		
+		document.getElementById("gameOverScreen").style.visibility = "visible";
+	}
 
 };

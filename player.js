@@ -1,17 +1,18 @@
 class Player {
 	constructor(){
 		this.fH = 19,
-		this.state = 'down',
+		this.state = "down",
 		this.states = {
-			'down': {x: 65, y: 0, f:[0]},
-			'up': {x: 65, y: 20, f:[0]},
-			'left': {x: 65, y: 40, f:[0]},
-			'right': {x: 65, y: 79, f:[0]},
-			'downGo': {x: 65, y: 0, f:[0,1,0,2]},
-			'upGo': {x: 65, y: 20, f:[0,1,0,2]},
-			'rightGo': {x: 65, y: 79, f:[0,1,0,2]},
-			'leftGo': {x: 65, y: 40, f:[2,0,2,1]},
-			'die': {x: 0, y: 59, f:[0,1,0,1,2,3,4,5,6]}
+			"down": {x: 65, y: 0, f:[0]},
+			"up": {x: 65, y: 20, f:[0]},
+			"left": {x: 65, y: 40, f:[0]},
+			"right": {x: 65, y: 79, f:[0]},
+			"downGo": {x: 65, y: 0, f:[0,1,0,2]},
+			"upGo": {x: 65, y: 20, f:[0,1,0,2]},
+			"rightGo": {x: 65, y: 79, f:[0,1,0,2]},
+			"leftGo": {x: 65, y: 40, f:[2,0,2,1]},
+			"die": {x: 0, y: 59, f:[0,1,0,1,2,3,4,5,6]},
+			"win": {x: 0, y: 79, f:[0, 1]}
 		},
 		this.currFrame = 0,
 		//start player position
@@ -25,14 +26,14 @@ class Player {
 	}
 
 	draw(){ 
-		if (this.state.slice(-2) === 'Go'){
-			if (this.state === 'downGo'){
+		if (this.state.slice(-2) === "Go"){
+			if (this.state === "downGo"){
 				this.y += this.speed;
-			} else if (this.state === 'upGo'){
+			} else if (this.state === "upGo"){
 				this.y -= this.speed;
-			} else if (this.state === 'rightGo'){
+			} else if (this.state === "rightGo"){
 				this.x += this.speed;
-			} else if (this.state === 'leftGo'){
+			} else if (this.state === "leftGo"){
 				this.x -= this.speed;
 			} 
 
@@ -65,13 +66,13 @@ class Player {
 			this.state = this._state;
 
 			if (Game.key37){
-				this.state = 'leftGo';
+				this.state = "leftGo";
 			} else if (Game.key38){
-				this.state = 'upGo';
+				this.state = "upGo";
 			} else if (Game.key39){
-				this.state = 'rightGo';
+				this.state = "rightGo";
 			} else if (Game.key40){
-				this.state = 'downGo';
+				this.state = "downGo";
 			} else {
 				this.state = this.state.slice(0, -2);
 			}
@@ -88,13 +89,13 @@ class Player {
 		this.row = Math.round(this.y/GameInfo.fH),
 		this.column = Math.round(this.x/GameInfo.fW)
 
-		if (this.state.slice(-2) === 'Go'){
-			if (this.state === 'leftGo' || this.state === 'rightGo'){
+		if (this.state.slice(-2) === "Go"){
+			if (this.state === "leftGo" || this.state === "rightGo"){
 				this.nextRow = this.row;
-				this.nextColumn = this.state === 'leftGo' ? Math.floor(this.x/GameInfo.fW) : Math.ceil(this.x/GameInfo.fW);
+				this.nextColumn = this.state === "leftGo" ? Math.floor(this.x/GameInfo.fW) : Math.ceil(this.x/GameInfo.fW);
 			} else {
 				this.nextColumn = this.column;
-				this.nextRow = this.state === 'upGo' ? Math.floor(this.y/GameInfo.fH) : Math.ceil(this.y/GameInfo.fW);
+				this.nextRow = this.state === "upGo" ? Math.floor(this.y/GameInfo.fH) : Math.ceil(this.y/GameInfo.fW);
 			}
 			this.checkIfEmpty();
 		} else {
@@ -105,7 +106,7 @@ class Player {
 
 	checkIfEmpty(){
 		if (Game.board.arena[this.nextRow][this.nextColumn].x !== Board.elements.floor.x){
-			//stay if there's a block
+			//stay if there"s a block
 			this.state = this.state.slice(0, -2);
 			this.currFrame = 0;
  			this.y = this.row*GameInfo.fH;
@@ -131,6 +132,13 @@ class Player {
 			window.clearInterval(Game.showFirst);
 			window.clearInterval(Game.showSecFour);
 			window.clearInterval(Game.showThirdFifth);
+			Game.enemy.result = true;
+			Game.enemy.result2 = true;
+			Game.enemy.result3 = true;
+			Game.enemy.result4 = true;
+			Game.enemy.result5 = true;
+			this.state = "win";
+			Game.gameOverScreen();
 		}
 	}
 

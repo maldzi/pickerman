@@ -35,10 +35,10 @@ class Board {
 			this.arena.push([]);
 			for (let j = 0; j < array[i].length; j++){
 				this.arena[i].push(
-					Board.elements[array[i].charAt(j) === ' ' ? 'floor' : array[i].charAt(j)]
+					Board.elements[array[i].charAt(j) === " " ? "floor" : array[i].charAt(j)]
 				);
 
-				if (array[i].charAt(j) === ' ' && !(i === 1 && j === 1)) {
+				if (array[i].charAt(j) === " " && !(i === 1 && j === 1)) {
 					this.emptyPlaces.push({x: j, y: i});
 				}
 			}
@@ -83,10 +83,10 @@ class Board {
 }
 
 Board.elements = {
-	'floor': {x: 32, y: 23},
-	'X': {x: 16, y: 23},
-	'Y': {x: 0, y: 23},
-	'C': {x: 0, y: 39, f: [0, 1, 2, 3]}
+	"floor": {x: 32, y: 23},
+	"X": {x: 16, y: 23},
+	"Y": {x: 0, y: 23},
+	"C": {x: 0, y: 39, f: [0, 1, 2, 3]}
 };
 
 Board.arenas = [
@@ -124,6 +124,30 @@ Board.arenas = [
 		"X  YYY Y      X",
 		"X          YY X",
 		"X    Y Y Y Y  X",
+		"XXXXXXXXXXXXXXX"
+	],
+	[
+		"XXXXXXXXXXXXXXX",
+		"X    Y   Y    X",
+		"X Y     Y   Y X",
+		"X  Y    Y Y   X",
+		"X Y      Y Y  X",
+		"X   Y   Y     X",
+		"X  Y Y Y      X",
+		"X          YY X",
+		"X Y  Y Y Y Y  X",
+		"XXXXXXXXXXXXXXX"
+	],
+	[
+		"XXXXXXXXXXXXXXX",
+		"X    Y   Y    X",
+		"X    Y  Y    YX",
+		"X  Y      Y   X",
+		"X Y   Y  Y Y  X",
+		"X   Y   Y    YX",
+		"X  Y Y        X",
+		"X           Y X",
+		"XYY      Y Y  X",
 		"XXXXXXXXXXXXXXX"
 	]
 ];
